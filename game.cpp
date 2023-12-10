@@ -1,4 +1,4 @@
-/*   
+/* 
     NAMA KELOMPOK : NPM
     BUNGARAN NATANAEL SIAHAAN : 2317051048
     DEA DELVINATA             : 2317051027
@@ -55,14 +55,17 @@ void gotoxy(int x, int y) {
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 60, gold=100000, defense = 0, SwordLevel = 0;int stamina=20;
+    int health = 1000, gold=100000, defense = 0, SwordLevel = 0;int stamina=20;
     int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
     char sword;
     string todo;
-    bool Exit = false; // untuk bolak baik ke main menu- how to play
-    bool muncul=false;
+    bool Exit = false; // untuk bolak baik ke main menu- how to plays
+    bool muncul=false; // ngeliatain kalo udah max sword 
+    bool warna; // warna temple
+
+    int N; // lama berperang;
 // Global Loading
 void global(){
     char x = 219;
@@ -72,17 +75,18 @@ void global(){
 }
 // Global Loading
 
-void HealthBar(){
+int dmg;
+int HealthBar(int dmg){
     for(int i=30;i>0;i--){
         char x=219; 
         if(i >= 22){
-            gotoxy(13,13);
+            gotoxy(60,13);
             for(int j=i;j>0;--j){cout << GREEN << x;}
         }else if(i >= 12 ){
-            gotoxy(13,13);
+            gotoxy(60,13);
             for(int j=i;j>0;--j){cout << YELLOW << x << RESET;}
         }else{
-            gotoxy(13,13);
+            gotoxy(60,13);
             for(int j=i;j>0;--j){cout << RED << x << RESET;}
         }
             for(int j=30-i;j>0;--j){cout << " ";}
@@ -240,9 +244,15 @@ gotoxy(57+26,i);cout << "(_|____________________________________________|_)";i++
         B A T T L E    F I E L D
 */
 
-void Temple(){
+int Temple(bool warna = false){
     system("cls");
     int z=30;int i=0;
+if(!warna){
+    cout << RED;
+}
+else if(warna){
+    cout << GREEN;
+}
 gotoxy(z,i);cout << "                   )\\         O_._._._A_._._._O         /(                    ";i++;
 gotoxy(z,i);cout << "                    \\`--.___,'=================`.___,--'/                     ";i++;
 gotoxy(z,i);cout << "                     \\`--._.__                 __._,--'/                      ";i++;
@@ -271,11 +281,88 @@ gotoxy(z,i);cout << "           --'--'     / |---------------------------| \\   
 gotoxy(z,i);cout << "                    ()  |___________________________|  ()           '--'-      ";i++;
 gotoxy(z,i);cout << "      --'-          /| _______________________________  |\\                    ";i++;
 gotoxy(z,i);cout << "     --'           / |__________________________________| \\                   ";i++;
+
+cout << RESET;
 }
 
-void Monster(){
-int z=67;int i=12;
-cout << RED;
+void Dataran(){
+    int z=0;
+    int i=24;                                                                                                  
+gotoxy(z,i);cout << "~~^ ~~^-~^_~^~/  \\~^-~^~_~                                               \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~^~-^~_^~~-^~_~^~-~_~-^~_^/  -~^_~^~/  \\~^-~^~_ ";i++;
+gotoxy(z,i);cout << "~ _~~- ~~^-~^_~^~/  \\~^-~^~_~_~                                       - ^~_^-^~~_ -~^_ -~_-~~^- _~~^~-^~_^~~-^~_~^~-~_~-^~_^/  -~^_~^~/  \\~^-~^~";i++;
+gotoxy(z,i);cout << "~ ^- ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~                      ~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-   _~~_-  ~~ _ ~  ^~  - ~~^ -~_-~~^- ";i++;
+gotoxy(z,i);cout << "~-  ^_  ~^ -  ^~ _ - ~^~ _   _~^~-  _ ~~^ - _ ~ - _ ~~^ -      ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  ~~^-~^_~^~/  \\~^-~^~_~^-~_^~";i++;
+gotoxy(z,i);cout << "~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  ~^ -_ ~^^ -_ ~ _ - _ ~^~-  _~ -_   ~ ";i++;
+gotoxy(z,i);cout << "~~^-~^_~^~/ ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/    \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/ ~^~ - _ ^ - ~~~ _ - _ ~-^ ~ __- ~~   ";i++;
+gotoxy(z,i);cout << "~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/     ~ ~- ^~ -  ~^ -  ~ ^~ - ~~  ^~ - ~\\~^-~^~_~^-~\\~^-~^~_~^-~ -~_-~~^- _~~_~-^";i++;
+
+}
+
+int a=56,b=23,stopSlash=0;
+void Slash(){
+    //z=56
+while(true){
+
+    for(int i = 0; i < 5; i++){
+    gotoxy(a,b); cout << "\\ " ;
+    gotoxy(a+1,b+1); cout << "} " ;
+    gotoxy(a,b+2); cout << "/ " ;
+
+        Sleep(500);
+    gotoxy(a,b); cout << "   " ;
+    gotoxy(a+1,b+1); cout << "  " ;
+    gotoxy(a,b+2); cout << "  " ;
+
+        a+=6;
+        b = 23;
+    }
+    a=56;b=23;
+
+    stopSlash++;
+    if(stopSlash==4){
+        break;}
+    
+    HealthBar(dmg);
+}
+
+
+}
+
+void Helbert1(){
+
+int z=37,i=17+1+6;
+cout << GREEN;
+gotoxy(z,i);cout << "    ---==|- ";i++;
+gotoxy(z,i);cout << "      \\o-\\";i++;
+gotoxy(z,i);cout << "       |v(  ";i++;
+gotoxy(z,i);cout << "      /\\/  ";i++;
+cout << RESET;
+
+}
+
+
+void Helbert(){ 
+int z=37;int i=17+1+6;
+cout << GREEN;
+gotoxy(z,i);cout << "   .|.   o  /\\   ";i++;
+gotoxy(z,i);cout << "   -|- / | `)o    ";i++;
+gotoxy(z,i);cout << "        / \\ \\/  ";i++;
+
+
+cout << RESET;
+
+}
+
+int Monster(int N){
+int z=67;int i=9+6+1;
+N = N - 47;
+
+while(N > 0){
+    barStatus();
+    Dataran();
+    Helbert(); // memisahkan helbert 
+    Helbert1();
+    cout << RED;
 gotoxy(z,i);cout << "_        __                    ";i++;
 gotoxy(z,i);cout << "       o)/)_    /  \\_         ";i++;
 gotoxy(z,i);cout << "   o^^^  _  \\  /     \\       ";i++;
@@ -287,10 +374,41 @@ gotoxy(z,i);cout << "           /     \\  !/     .  ";i++;
 gotoxy(z,i);cout << "          ( /_    \\_      _/) ";i++;
 gotoxy(z,i);cout << "         _)\\ ^-_  ^^--^^ /    ";i++;
 gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
+
+    int x=66,y=12+1+6;int p=0;
+    for(int j=1;j<=4;i++){
+    // x=38,y=21,
+    gotoxy(x,y);cout << " O ";
+    Sleep(300);
+    gotoxy(x,y);cout << "   ";
+    x-=3;
+    y++;
+    Sleep(300);
+    if(y==21+4)
+    {
+        break;
+    }
+    p++;
+}   health-=91;
+    stamina-=10;
+    experience+=187;
+    if(health<=0){ // jika health kurang dari atau sama dengan 0, maka akan Game Over.
+        break;
+    }
+    if(p==1){
+        int x=66,y=12+6+1;
+    }
+
+N--;
+if(N<=1){break;};
+z=67,i=9+1+6;
+
+};
+barStatus();
 cout << RESET;
 
+return N;
 }
-
 
 void HelpShop(){
     int z=1;int i=16;
@@ -387,20 +505,20 @@ cout << endl; system("pause");
 void mainMenu(){
     system("cls");
              cout << endl;// The Adventure Of Halbert
-gotoxy(31,4);cout << "*************************************************************************";
-gotoxy(31,5);cout << "*  _____ _               _       _                 _                    *";
-gotoxy(31,6);cout << "* |_   _| |__   ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___   *";
-gotoxy(31,7);cout << "*   | | | '_ \\ / _ \\   / _ \\ / _` \\ \\ / / _ \\ '_ \\| __| | | | '__/ _ \\  *";
-gotoxy(31,8);cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *";
-gotoxy(31,9);cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  *";
-gotoxy(31,10);cout << "*                                                                       *";
-gotoxy(31,11);cout << "*                    __   _   _       _ _               _               *";
-gotoxy(31,12);cout << "*              ___  / _| | | | | __ _| | |__   ___ _ __| |_             *";
-gotoxy(31,13);cout << "*             / _ \\| |_  | |_| |/ _` | | '_ \\ / _ \\ '__| __|            *";
-gotoxy(31,14);cout << "*            | (_) |  _| |  _  | (_| | | |_) |  __/ |  | |_             *";
-gotoxy(31,15);cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *"; 
-gotoxy(31,16);cout << "*                                                                       *";
-gotoxy(31,17);cout << "*************************************************************************";
+gotoxy(31,4);cout << "*************************************************************************         ";
+gotoxy(31,5);cout << "*  _____ _               _       _                 _                    *         ";
+gotoxy(31,6);cout << "* |_   _| |__   ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___   *        ";
+gotoxy(31,7);cout << "*   | | | '_ \\ / _ \\   / _ \\ / _` \\ \\ / / _ \\ '_ \\| __| | | | '__/ _ \\  * ";
+gotoxy(31,8);cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *       ";
+gotoxy(31,9);cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  * ";
+gotoxy(31,10);cout << "*                                                                       *        ";
+gotoxy(31,11);cout << "*                    __   _   _       _ _               _               *        ";
+gotoxy(31,12);cout << "*              ___  / _| | | | | __ _| | |__   ___ _ __| |_             *        ";
+gotoxy(31,13);cout << "*             / _ \\| |_  | |_| |/ _` | | '_ \\ / _ \\ '__| __|            *     ";
+gotoxy(31,14);cout << "*            | (_) |  _| |  _  | (_| | | |_) |  __/ |  | |_             *        ";
+gotoxy(31,15);cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *    "; 
+gotoxy(31,16);cout << "*                                                                       *        ";
+gotoxy(31,17);cout << "*************************************************************************        ";
 gotoxy(31,18);cout << "Selamat datang, " << username;
 gotoxy(31,19);cout << "1. Login";
 gotoxy(31,20);cout << "2. Register";
@@ -451,7 +569,7 @@ void opening(){
 int main(){
 
     //system("color 02");
-    //opening();
+    opening();
 
     if(Exit){
      return 0;
@@ -460,6 +578,7 @@ int main(){
     //while true
     bool Move = true;
     while(Move){
+        if(health<=0){Move=false;system("cls");cout << RED << "G A M E  O V E R ~ ";break;}
     //system("cls");
     barStatus();
     cout << "\n\nHello ! Good Morning, " << username << endl;
@@ -476,7 +595,7 @@ int main(){
     system("cls");
     if(todo == "1")
         {
-            Temple();
+            Temple(warna = false);
             cout << endl << "Your current gold : " << gold;
             cout << endl << "Your current sword level : " << SwordLevel << endl;
             if(SwordLevel>=7){muncul=true;cout << RED <<"You Need To Buy New Sword in Shop ! \n\n" << RESET;}else{muncul=false;};
@@ -534,20 +653,22 @@ int main(){
                 system("cls");
                 //break;
             } 
-
+        if(up == 'y'){
         global();
         system("cls");
-        Temple();
+        Temple(warna = true);
         cout << endl << "Current gold        : " << gold << " " << "\nCurrent Sword Level : " << SwordLevel << endl; 
         system("pause");
         system("cls");  
+        }
         }
 
 
     //game:
     else if(todo == "2")
         {
-            Monster();
+//            Helbert();
+//            Monster();
             cout << "\nExplore (max 8 hours)\n";
             cout << "Mau Explore berapa lama ? : ";
             cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
@@ -556,12 +677,20 @@ int main(){
                 timeExplore = (int)(timeExplore);
                 timeExplore-=100000;
             }
+            N = timeExplore;
 
             if (timeExplore <= 56 && timeExplore >= 49) {   // Stamina
-                gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
                 int earn =0;earn=earn+(20*(int)(timeExplore-48)); // buat nampilihn hasil gold yang diperoleh
-                global();cout << endl;
+
+        Monster(N);
+        //HealthBar();
+        //global();
+        Slash();
+     
+                gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
+                cout << endl;
                 cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
+                system("pause");
                 //goto weapon;
                 //break;//goto in_game;
             }
@@ -578,6 +707,8 @@ int main(){
                 //break;//goto game;
             }
 
+
+        system("cls");
         }
         
     else if(todo == "3"){
@@ -603,9 +734,9 @@ int main(){
                 else if(gold < 430){system("cls");gotoxy(48,29);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
                 break;
             case '3': // hp pot 200
-                if(health==100 && gold >= 200){system("cls");gotoxy(48,29);cout<< YELLOW <<"Your HP is Already Full !"<< RESET;}
-                else if(health <= 99 &&health>=65 && gold >=200 ){system("cls");success();health=100;gold-=200;}
-                else if(gold>=200 && health<65){success();gold-=200;health+=35;}
+                if(health==1000 && gold >= 200){system("cls");gotoxy(48,29);cout<< YELLOW <<"Your HP is Already Full !"<< RESET;}
+                else if(health <= 999 &&health>=650 && gold >=200 ){system("cls");success();health=1000;gold-=200;}
+                else if(gold>=200 && health<650){success();gold-=200;health+=35;}
                 else if(gold < 200){system("cls");gotoxy(48,29);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
                 break;
             case '4': // energypot
