@@ -7,13 +7,13 @@
 
 // INCLUDING LIBRARY
 #include <iostream>
-#include <windows.h>
-#include <iomanip> // menepatkan bar agar tidak geser
+#include <windows.h> //S gede
+#include <iomanip> // menepatkan bar agar tidak geser biar bordernya gak geser jadi nanti ngisi angkanya bakalan maju kedepan
 #include <ncurses/curses.h>
-#include <unistd.h>
+//#include <unistd.h> // gapenting sama aja kek windows s kecil
 
 // COLORING
-#define RESET "\033[0m"
+#define RESET "\033[0m" 
 #define BLACK "\033[30m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -139,7 +139,7 @@ cout << RESET;
             name.clear();password.clear();
             break;
         }
-        if(!found)
+        if(!found)//salah psw
         {   int W=42,V=7;
             system("cls");
             name.clear();password.clear();
@@ -321,7 +321,7 @@ gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
     int x=66,y=12+1+6;int p=0;
     for(int j=1;j<6;j++){ // i = j++
     // x=38,y=21,
-    gotoxy(x,y);cout << " O "; // serangan
+    gotoxy(x,y);cout << " O "; // serangan //mvprintw
     Sleep(300);
     gotoxy(x,y);cout << "   ";
     x-=5;
@@ -472,7 +472,7 @@ gotoxy(31,24);cout << " your choise : ";
         case '1' :
             system("cls");
             login();
-            break;
+            break;//klo ga break tembus ke bawah
         case '2' :
             Register();
             break;
